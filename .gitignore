@@ -34,3 +34,4 @@ build/
 
 ## YML ###
 src/main/resources/application.yml
+src/main/resources/application-test.yml
