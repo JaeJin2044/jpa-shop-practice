@@ -6,6 +6,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -120,4 +121,31 @@ public class RequestUtils {
     return null;
   }
 
+  /**
+   * 현재 RequestURL 및 QueryString을 구한다.
+   * @return String
+   */
+  public static String getRequestURLWithQueryString() {
+    StringBuffer requestURL = Objects.requireNonNull(getRequest()).getRequestURL();
+    String queryString = Objects.requireNonNull(getRequest()).getQueryString();
+
+    if(StringUtils.isNotBlank(queryString)){
+      requestURL.append("?").append(queryString);
+    }
+    return requestURL.toString();
+  }
+
+  /**
+   * RequestURI 및 QueryString 획득
+   * @return String
+   */
+  public static String getRequestURIWithQueryString() {
+    String requestURI = Objects.requireNonNull(getRequest()).getRequestURI();
+    String queryString = Objects.requireNonNull(getRequest()).getQueryString();
+
+    if(StringUtils.isNotBlank(queryString)){
+      requestURI = requestURI + "?" + queryString;
+    }
+    return requestURI;
+  }
 }
