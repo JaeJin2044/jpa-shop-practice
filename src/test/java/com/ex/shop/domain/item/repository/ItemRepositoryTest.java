@@ -1,8 +1,8 @@
 package com.ex.shop.domain.item.repository;
 
+import com.ex.shop.domain.item.entity.Item;
 import com.ex.shop.domain.item.entity.QItem;
 import com.ex.shop.domain.item.enums.ItemSellStatus;
-import com.ex.shop.domain.item.entity.Item;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -13,7 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;

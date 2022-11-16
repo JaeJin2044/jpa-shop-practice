@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .error {
+            color: #bd2130;
+        }
+    </style>
+</th:block>
+
+<div layout:fragment="content">
+    <div class="container container-mt">
+        <form role="form" method="post" action="/members/login/process" id="f1">
+            <div class="form-group">
+                <label th:for="email">이메일주소</label>
+                <input type="email" name="email" class="form-control" placeholder="이메일을 입력해주세요">
+            </div>
+            <div class="form-group">
+                <label th:for="password">비밀번호</label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="비밀번호 입력">
+            </div>
+            <p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p>
+            <button type="button" class="btn btn-secondary" style="margin-right: 5px;" id="loginBtn">로그인</button>
+            <button type="button" class="btn btn-secondary" onClick="location.href='/members/new'">회원가입</button>
+        </form>
+    </div>
+
+    <!-- 사용자 스크립트 추가 -->
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            $('#loginBtn').click(function(){
+                let eamil = $('input[name="email"]').val();
+                let password =  $('input[name="password"]').val();
+
+                let params = {
+                    'email' : eamil,
+                    'password' : password
+                }
+
+                let option ={
+                    type : 'post'
+                    , url : $('#f1').attr('action')
+                    , data : params
+                    , dataType : 'text'
+                }
+
+                ajaxRestCall(option).then(res => {
+                    console.log(res);
+                    if(res == '00'){
+                        location.href = "/main";
+                    }
+                }).catch(error => {
+                    if(error && error.responseText){
+                        let code = error.responseText;
+                        switch (code){
+                            case "01":
+                                alert('비밀번호를 올바르게 입력해주세요');
+                                break;
+                            case "02":
+                                alert('존재하지 않는 회원입니다.');
+                                break;
+                            case "03":
+                                alert('알 수 없는에러가 발생하였습니다. \n 다시시도해주세요');
+                                break;
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+
+</div>
+</html>
