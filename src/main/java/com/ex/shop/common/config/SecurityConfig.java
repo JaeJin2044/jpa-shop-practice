@@ -1,7 +1,7 @@
 package com.ex.shop.common.config;
 
-import com.ex.shop.common.security.CustomAuthenticationEntryPoint;
-import com.ex.shop.common.security.handler.UserAccessDeniedHandler;
+import com.ex.shop.common.auth.CustomAuthenticationEntryPoint;
+import com.ex.shop.common.auth.handler.UserAccessDeniedHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

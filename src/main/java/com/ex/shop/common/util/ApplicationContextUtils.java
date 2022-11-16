@@ -15,6 +15,8 @@ public class ApplicationContextUtils implements ApplicationContextAware {
     applicationContext = ctx;
   }
 
+
+  
   /**
    * ApplicationContext 반환.
    *

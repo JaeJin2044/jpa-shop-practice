@@ -1,9 +1,8 @@
-package com.ex.shop.common.security;
+package com.ex.shop.common.auth;
 
 
-import com.ex.shop.common.security.auth.PrincipalDetailService;
-import com.ex.shop.common.security.auth.PrincipalDetails;
-import com.ex.shop.domain.member.repository.MemberRepository;
+import com.ex.shop.common.auth.principal.PrincipalDetailService;
+import com.ex.shop.common.auth.principal.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;

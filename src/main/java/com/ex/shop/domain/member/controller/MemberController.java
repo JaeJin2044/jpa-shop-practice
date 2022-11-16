@@ -1,6 +1,6 @@
 package com.ex.shop.domain.member.controller;
 
-import com.ex.shop.common.security.auth.PrincipalDetails;
+import com.ex.shop.common.auth.principal.PrincipalDetails;
 import com.ex.shop.domain.member.dto.MemberDto;
 import com.ex.shop.domain.member.entity.Member;
 import com.ex.shop.domain.member.service.MemberService;

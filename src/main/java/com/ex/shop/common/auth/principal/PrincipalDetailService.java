@@ -1,4 +1,4 @@
-package com.ex.shop.common.security.auth;
+package com.ex.shop.common.auth.principal;
 
 import com.ex.shop.domain.member.entity.Member;
 import com.ex.shop.domain.member.repository.MemberRepository;

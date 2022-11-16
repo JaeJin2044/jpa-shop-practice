@@ -1,4 +1,4 @@
-package com.ex.shop.common.security;
+package com.ex.shop.common.auth;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

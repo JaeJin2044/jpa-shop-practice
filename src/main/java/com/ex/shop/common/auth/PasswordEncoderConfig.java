@@ -1,4 +1,4 @@
-package com.ex.shop.common.security;
+package com.ex.shop.common.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.ex.shop.common.security.handler;
+package com.ex.shop.common.auth.handler;
 
 import com.ex.shop.common.enums.ErrorMsgType;
 import java.io.IOException;
