@@ -1,4 +1,4 @@
-package com.ex.shop.common.auth;
+package com.ex.shop.common.security.auth;
 
 import com.ex.shop.domain.member.entity.Member;
 import java.util.ArrayList;

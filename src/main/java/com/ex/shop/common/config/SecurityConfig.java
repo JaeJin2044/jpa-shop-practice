@@ -1,6 +1,7 @@
 package com.ex.shop.common.config;
 
-import com.ex.shop.common.auth.UserAccessDeniedHandler;
+import com.ex.shop.common.security.CustomAuthenticationEntryPoint;
+import com.ex.shop.common.security.handler.UserAccessDeniedHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,9 +19,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig{
-
-  private final UserAccessDeniedHandler userAccessDeniedHandler;
-
 
   @Bean
   @Order(0)
@@ -48,7 +46,7 @@ public class SecurityConfig{
     httpSecurity.csrf(AbstractHttpConfigurer::disable)
       .headers(header -> header.frameOptions().sameOrigin())
       .authorizeRequests(authorize -> authorize
-        .antMatchers("/members/**", "/error/**","/item/**","/images/**","/main","/")
+        .antMatchers("/members/**", "/error/**","/item/**","/images/**","/main","/","/error-msg")
         .permitAll()
         .antMatchers("/admin/**").hasRole("ADMIN")   // admin 권한만 접근가능
         .anyRequest()
@@ -63,7 +61,9 @@ public class SecurityConfig{
         .permitAll())
       .sessionManagement(session -> session
         .invalidSessionUrl(loginPage))
-      .exceptionHandling(ex -> ex.accessDeniedHandler(userAccessDeniedHandler)) // 접근 권한 체크
+      .exceptionHandling(error -> error
+        .accessDeniedHandler(new UserAccessDeniedHandler())
+        .authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
       .logout(logout -> logout
         .logoutRequestMatcher(new AntPathRequestMatcher(logoutUrl))
         .invalidateHttpSession(true)

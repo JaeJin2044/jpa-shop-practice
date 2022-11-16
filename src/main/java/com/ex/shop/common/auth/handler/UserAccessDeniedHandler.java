@@ -1,5 +1,6 @@
-package com.ex.shop.common.auth;
+package com.ex.shop.common.security.handler;
 
+import com.ex.shop.common.enums.ErrorMsgType;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +12,12 @@ import org.springframework.stereotype.Component;
 public class UserAccessDeniedHandler implements AccessDeniedHandler {
 
 	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException)
-			throws IOException, ServletException {
-		response.sendRedirect("/members/auth/error");
-	}
+	public void handle(
+		HttpServletRequest request,
+		HttpServletResponse response,
+		AccessDeniedException accessDeniedException
+	) throws IOException, ServletException {
 
+		response.sendRedirect("/error-msg?errorCode="+ ErrorMsgType.ACCESS_DENIED.getCode());
+	}
 }

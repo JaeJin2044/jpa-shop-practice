@@ -1,6 +1,8 @@
-package com.ex.shop.common.auth;
+package com.ex.shop.common.security;
 
 
+import com.ex.shop.common.security.auth.PrincipalDetailService;
+import com.ex.shop.common.security.auth.PrincipalDetails;
 import com.ex.shop.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +21,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
   private final PrincipalDetailService principalDetilsService;
   private final PasswordEncoder passwordEncoder;
-  private final MemberRepository memberRepository;
-
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {

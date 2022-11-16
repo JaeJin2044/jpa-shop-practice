@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div>
+  <script type="text/javascript" th:inline="javascript">
+    var ERROR_CODE = [[${errorCode}]];
+    var ERROR_MSG = [[${errorMsg}]];
+
+    switch (ERROR_CODE){
+      case '11':
+        if(ERROR_MSG){
+          alert(ERROR_MSG);
+        }
+        break;
+      default:
+        alert('알 수 없는 에러가 발생하였습니다.');
+        break;
+    }
+    history.go(-1);
+  </script>
+</div>
