@@ -8,10 +8,12 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 public interface ItemRepository extends JpaRepository<Item,Long> , QuerydslPredicateExecutor<Item> {
 
-  List<Item> findByName(String name);
+  List<Item> findByItemNm(String name);
 
 
   @Query("select i from Item i where i.itemDetail like %:itemDetail% order by i.price desc")
   List<Item> findByItemDetail(String itemDetail);
+
+
 
 }

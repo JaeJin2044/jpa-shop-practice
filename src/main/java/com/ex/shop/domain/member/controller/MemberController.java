@@ -5,6 +5,7 @@ import com.ex.shop.domain.member.dto.MemberDto;
 import com.ex.shop.domain.member.entity.Member;
 import com.ex.shop.domain.member.service.MemberService;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,8 +68,8 @@ public class MemberController {
   @ResponseBody
   public ResponseEntity<?> loginSuccess(
     HttpServletRequest request,
-    @AuthenticationPrincipal PrincipalDetails principalDetails
-  ){
+    HttpServletResponse response,
+    @AuthenticationPrincipal PrincipalDetails principalDetails){
     if(principalDetails != null){
       log.info("유저 정보 : {} ", principalDetails.getMember().toString());
     }

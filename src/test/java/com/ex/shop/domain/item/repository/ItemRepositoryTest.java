@@ -38,7 +38,7 @@ class ItemRepositoryTest {
     /*step1 */
     IntStream.range(0,10).forEach(i -> {
       Item item = new Item();
-      item.setName("kk"+i);
+      item.setItemNm("kk"+i);
       item.setPrice(1000+i);
       item.setItemDetail("이재진_품절"+i);
       item.setItemSellStatus(ItemSellStatus.SOLD_OUT);
@@ -50,7 +50,7 @@ class ItemRepositoryTest {
 
     IntStream.range(0,10).forEach(i -> {
       Item item = new Item();
-      item.setName("이재진"+i);
+      item.setItemNm("이재진"+i);
       item.setPrice(1000+i);
       item.setItemDetail("이재진_판매상태"+i);
       item.setItemSellStatus(ItemSellStatus.SELL);

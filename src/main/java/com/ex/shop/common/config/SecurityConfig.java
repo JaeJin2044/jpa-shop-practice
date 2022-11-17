@@ -17,7 +17,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity // 웹보안 활성화를 위한 annotation
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-@RequiredArgsConstructor
 public class SecurityConfig{
 
   @Bean
@@ -46,7 +45,7 @@ public class SecurityConfig{
     httpSecurity.csrf(AbstractHttpConfigurer::disable)
       .headers(header -> header.frameOptions().sameOrigin())
       .authorizeRequests(authorize -> authorize
-        .antMatchers("/members/**", "/error/**","/item/**","/images/**","/main","/","/error-msg")
+        .antMatchers("/members/**", "/error/**","/item/**","/images/**","/main","/","/error-msg","/test/**")
         .permitAll()
         .antMatchers("/admin/**").hasRole("ADMIN")   // admin 권한만 접근가능
         .anyRequest()
@@ -71,7 +70,6 @@ public class SecurityConfig{
         .logoutSuccessUrl(loginPage)
         .permitAll()
       );
-
     return httpSecurity.build();
   }
 }

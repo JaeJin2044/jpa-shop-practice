@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout1}">
+
+
+
+<div layout:fragment="content">
+  <h1>테스트 페이지</h1>
+  <button type="button" id="testBtn">클릭하면 ajax 테스트</button>
+
+  <script th:inline="javascript">
+
+    $(document).ready(function(){
+      $('#testBtn').click(function(){
+        testAjax();
+      })
+    })
+
+    let params = {
+      itemNm : '이재SDKJSDKJSKSJDKJ',
+      stockNumber : 100,
+      itemDetail : '안녕하세요',
+      total : 1023,
+      id : 1,
+      price : 1000
+    };
+
+    function testAjax(){
+      let option ={
+        type : 'post'
+        , url : "/test/data"
+        , dataType : 'json'
+        , contentType: 'application/json; charset=utf-8'
+        , data : JSON.stringify(params)
+      }
+
+      ajaxRestCall(option).then(res => {
+        console.log('확인');
+        if(res && res.code == 'S000'){
+          console.log('로직스타트');
+          console.log(res.data);
+        }
+      }).catch(error => {
+        let errorData = error.responseJSON;
+        console.log('catch');
+        console.log(errorData);
+
+      })
+    }
+
+
+
+  </script>
+
+</div>

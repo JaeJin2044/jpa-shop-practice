@@ -32,7 +32,6 @@ public class ThymeleafExController {
       .itemDetail("상품 상세 설명")
       .itemNm("테스트상품1")
       .price(10000)
-      .regTime(LocalDateTime.now())
       .build();
     model.addAttribute("itemDto",itemDto);
     return "thymeleafEx/ex02";
@@ -50,7 +49,6 @@ public class ThymeleafExController {
         .itemDetail("상품 상세 설명"+i)
         .itemNm("테스트상품"+i)
         .price(10000*i)
-        .regTime(LocalDateTime.now())
         .build();
         list.add(itemDto);
     });

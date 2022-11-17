@@ -1,15 +1,20 @@
 package com.ex.shop.domain.item.entity;
 
+import com.ex.shop.common.entity.BaseEntity;
+import com.ex.shop.domain.item.dto.ItemFormDto;
 import com.ex.shop.domain.item.enums.ItemSellStatus;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +31,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Table(name="item")
 @Entity
-public class Item {
+public class Item extends BaseEntity {
 
   /* 상품 코드*/
   @Id
@@ -35,8 +40,8 @@ public class Item {
   private Long id;
 
   /* 상품 명*/
-  @Column(nullable = false, length = 50)
-  private String name;
+  @Column(nullable = false, length = 255, name = "item_nm")
+  private String itemNm;
 
   /* 가격 */
   @Column(name="price", nullable = false)
@@ -55,9 +60,12 @@ public class Item {
   @Enumerated(EnumType.STRING)
   private ItemSellStatus itemSellStatus;
 
-  private LocalDateTime createdAt;
-
-  private LocalDateTime updatedAt;
-
+  public void updateItem(ItemFormDto itemFormDto){
+    this.itemNm = itemFormDto.getItemNm();
+    this.price = itemFormDto.getPrice();
+    this.stockNumber = itemFormDto.getStockNumber();
+    this.itemDetail = itemFormDto.getItemDetail();
+    this.itemSellStatus = itemFormDto.getItemSellStatus();
+  }
 
 }

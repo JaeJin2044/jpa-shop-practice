@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * 모든 에러 발생시 해당 commence 메서드를 호출한다.
