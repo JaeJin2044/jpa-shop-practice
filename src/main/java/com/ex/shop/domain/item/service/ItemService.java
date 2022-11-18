@@ -2,6 +2,7 @@ package com.ex.shop.domain.item.service;
 
 import com.ex.shop.domain.item.dto.ItemFormDto;
 import com.ex.shop.domain.item.dto.ItemImgDto;
+import com.ex.shop.domain.item.dto.ItemSearchDto;
 import com.ex.shop.domain.item.entity.Item;
 import com.ex.shop.domain.item.entity.ItemImg;
 import com.ex.shop.domain.item.repository.ItemImgRepository;
@@ -11,6 +12,8 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,10 +61,15 @@ public class ItemService {
     List<Long> itemImgIds = itemFormDto.getItemImgIds();
 
     //이미지 등록
-    int i = 0;
-    for (MultipartFile file : itemImgFileList) {
-      itemImgService.updateItemImg(itemImgIds.get(i), file);
-      i++;
+
+    if(itemImgFileList != null){
+
+      int i = 0;
+      for (MultipartFile file : itemImgFileList) {
+        itemImgService.updateItemImg(itemImgIds.get(i), file);
+        i++;
+      }
+
     }
     return item.getId();
   }
@@ -101,5 +109,11 @@ public class ItemService {
 //
 //    return itemFormDto;
 //  }
+
+
+  @Transactional(readOnly = true)
+  public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
+    return itemRepository.getAdminItemPage(itemSearchDto,pageable);
+  }
 
 }

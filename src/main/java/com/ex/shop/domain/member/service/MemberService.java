@@ -1,5 +1,6 @@
 package com.ex.shop.domain.member.service;
 
+import com.ex.shop.common.exception.BusinessException;
 import com.ex.shop.domain.member.entity.Member;
 import com.ex.shop.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,7 @@ public class MemberService {
   private void validateDuplicateMember(Member member) {
     memberRepository.findByEmail(member.getEmail())
       .ifPresent(o -> {
-        throw new IllegalStateException("이미 가입된 이메일입니다");
+        throw new BusinessException("이미 가입된 이메일입니다");
       });
   }
-
-
 }

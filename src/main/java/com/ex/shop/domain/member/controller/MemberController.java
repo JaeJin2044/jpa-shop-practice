@@ -1,6 +1,7 @@
 package com.ex.shop.domain.member.controller;
 
 import com.ex.shop.common.auth.principal.PrincipalDetails;
+import com.ex.shop.common.model.ApiDataResponse;
 import com.ex.shop.domain.member.dto.MemberDto;
 import com.ex.shop.domain.member.entity.Member;
 import com.ex.shop.domain.member.service.MemberService;
@@ -96,6 +97,15 @@ public class MemberController {
     }
     return "redirect:/";
   }
+
+  //TEST용
+//  @PostMapping("/new")
+//  @ResponseBody
+//  public ApiDataResponse<?> memberForm(@Valid MemberDto memberDto) {
+//    memberService.saveMember(Member.of(memberDto, passwordEncoder));
+//    return ApiDataResponse.ok();
+//  }
+
 }
 
 

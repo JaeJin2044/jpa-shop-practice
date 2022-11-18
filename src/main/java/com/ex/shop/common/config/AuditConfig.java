@@ -1,5 +1,6 @@
 package com.ex.shop.common.config;
 
+import com.ex.shop.common.service.AuditorAwareService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -11,7 +12,6 @@ public class AuditConfig {
     @Bean
     public AuditorAware<String> auditorProvider() {
         // auditoraware: 등록자와 수정자를 처리
-        return new AuditorAwareImpl();
+        return new AuditorAwareService();
     }
-
 }

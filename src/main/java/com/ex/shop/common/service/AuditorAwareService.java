@@ -1,14 +1,12 @@
-package com.ex.shop.common.config;
+package com.ex.shop.common.service;
 
 import com.ex.shop.common.auth.principal.PrincipalDetails;
-import com.ex.shop.domain.member.entity.Member;
+import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.Optional;
-
-public class AuditorAwareImpl implements AuditorAware<String> {
+public class AuditorAwareService implements AuditorAware<String> {
 
   @Override
   public Optional<String> getCurrentAuditor() {

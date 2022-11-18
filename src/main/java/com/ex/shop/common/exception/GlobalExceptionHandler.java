@@ -11,10 +11,11 @@ import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-@RestControllerAdvice
+@RestControllerAdvice(annotations = RestController.class)
 @Slf4j
 public class GlobalExceptionHandler {
 
@@ -101,7 +102,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(TestException.class)
   protected ResponseEntity<ErrorResponse> handleTestException(final TestException e, HttpServletRequest req) {
 
-    log.info("TestException URI : {} ", req.getRequestURI(), e);
+    log.info("TestException / URI : {} ", req.getRequestURI(), e);
     final ResponseCode responseCode = e.getErrorCode();
     final ErrorResponse response = ErrorResponse.of(responseCode, e.getMessage());
     return new ResponseEntity<>(response, responseCode.getStatus());
