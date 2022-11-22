@@ -123,8 +123,12 @@ public class ItemController {
     return "item/itemForm";
   }
 
-
-
-
-
+  // 상품 상세 get 페이지
+  @GetMapping(value = "/item/{itemId}")
+  public String itemDtl(Model model, @PathVariable("itemId") Long itemId) {
+    // getItemDtl: service 에 있는 메소드. 상품이랑, 상품이미지의 entity -> dto 로 바꾸기만 하는 service
+    ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
+    model.addAttribute("item", itemFormDto);
+    return "item/itemDtl";
+  }
 }

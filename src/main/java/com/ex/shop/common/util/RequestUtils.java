@@ -126,8 +126,11 @@ public class RequestUtils {
    * @return String
    */
   public static String getRequestURLWithQueryString() {
-    StringBuffer requestURL = Objects.requireNonNull(getRequest()).getRequestURL();
-    String queryString = Objects.requireNonNull(getRequest()).getQueryString();
+
+    HttpServletRequest reuqest = Objects.requireNonNull(getRequest());
+
+    StringBuffer requestURL = reuqest.getRequestURL();
+    String queryString = reuqest.getQueryString();
 
     if(StringUtils.isNotBlank(queryString)){
       requestURL.append("?").append(queryString);
@@ -140,8 +143,11 @@ public class RequestUtils {
    * @return String
    */
   public static String getRequestURIWithQueryString() {
-    String requestURI = Objects.requireNonNull(getRequest()).getRequestURI();
-    String queryString = Objects.requireNonNull(getRequest()).getQueryString();
+
+    HttpServletRequest reuqest = Objects.requireNonNull(getRequest());
+
+    String requestURI = reuqest.getRequestURI();
+    String queryString = reuqest.getQueryString();
 
     if(StringUtils.isNotBlank(queryString)){
       requestURI = requestURI + "?" + queryString;

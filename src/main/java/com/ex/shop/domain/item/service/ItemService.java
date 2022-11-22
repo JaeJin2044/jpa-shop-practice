@@ -1,5 +1,6 @@
 package com.ex.shop.domain.item.service;
 
+import com.ex.shop.domain.global.dto.MainItemDto;
 import com.ex.shop.domain.item.dto.ItemFormDto;
 import com.ex.shop.domain.item.dto.ItemImgDto;
 import com.ex.shop.domain.item.dto.ItemSearchDto;
@@ -113,7 +114,21 @@ public class ItemService {
 
   @Transactional(readOnly = true)
   public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
+//    Page<Item> adminItemPage = itemRepository.getAdminItemPage(itemSearchDto, pageable);
+//
+//    List<Item> content = adminItemPage.getContent();
+//
+//    content.forEach(o -> {
+//      List<ItemImg> itemImgList = o.getItemImgList();
+//      System.out.println(itemImgList);
+//    });
+
     return itemRepository.getAdminItemPage(itemSearchDto,pageable);
   }
 
+  // 메인 페이지에 보여줄 상품 데이테 조회
+  @Transactional(readOnly = true)
+  public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+    return itemRepository.getMainItemPage(itemSearchDto, pageable);
+  }
 }

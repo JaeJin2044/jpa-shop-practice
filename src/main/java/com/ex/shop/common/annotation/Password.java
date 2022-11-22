@@ -1,6 +1,6 @@
 package com.ex.shop.common.annotation;
 
-import com.ex.shop.common.model.PasswordValidate;
+import com.ex.shop.common.util.PasswordValidate;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -23,7 +23,7 @@ public @interface Password {
 
   Class<? extends Payload>[] payload() default {};
 
-  int min() default 0;
+  int min() default 6;
 
   int max() default 100;
 
@@ -34,7 +34,6 @@ public @interface Password {
     private int min;
     private int max;
     private boolean nullable;
-
 
     // 어노테이션 등록시 입력했던 parameter초기화
     @Override
@@ -47,6 +46,7 @@ public @interface Password {
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
       return isPasswordValidation(password, context);
+
     }
 
     private boolean isPasswordValidation(String password, ConstraintValidatorContext context) {
@@ -73,7 +73,7 @@ public @interface Password {
         case notDigitAndWordAndSpecial:
         case hangeul:
           addConstraintViolation(context,
-            String.format("비밀번호는 영문(대소문자 구분)+숫자+특수문자 포함 %d ~ %d자리로 입력해주세요", min, max));
+            String.format("비밀번호는 영문(대소문자 구분)+숫자+특수문자 포함 %d ~ %d자로 입력해주세요", min, max));
           return false;
       }
       return true;

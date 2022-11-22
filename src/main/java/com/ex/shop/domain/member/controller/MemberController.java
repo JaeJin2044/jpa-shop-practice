@@ -49,6 +49,7 @@ public class MemberController {
   public ResponseEntity<?> loginError(HttpServletRequest request){
 
     Throwable ex = (Throwable) request.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+
     String resultCode = "";
     if(ex != null){
       if(ex instanceof BadCredentialsException){
@@ -83,28 +84,28 @@ public class MemberController {
     return "member/memberForm";
   }
 
-  @PostMapping("/new")
-  public String memberForm(@Valid  MemberDto memberDto, BindingResult bindingResult, Model model){
-
-    if(bindingResult.hasErrors()){
-      return "member/memberForm";
-    }
-    try {
-      memberService.saveMember(Member.of(memberDto, passwordEncoder));
-    } catch (IllegalStateException e) {
-      model.addAttribute("errorMessage",e.getMessage());
-      return "member/memberForm";
-    }
-    return "redirect:/";
-  }
+//  @PostMapping("/new")
+//  public String memberForm(@Valid  MemberDto memberDto, BindingResult bindingResult, Model model){
+//
+//    if(bindingResult.hasErrors()){
+//      return "member/memberForm";
+//    }
+//    try {
+//      memberService.saveMember(Member.of(memberDto, passwordEncoder));
+//    } catch (IllegalStateException e) {
+//      model.addAttribute("errorMessage",e.getMessage());
+//      return "member/memberForm";
+//    }
+//    return "redirect:/";
+//  }
 
   //TEST용
-//  @PostMapping("/new")
-//  @ResponseBody
-//  public ApiDataResponse<?> memberForm(@Valid MemberDto memberDto) {
-//    memberService.saveMember(Member.of(memberDto, passwordEncoder));
-//    return ApiDataResponse.ok();
-//  }
+  @PostMapping("/new")
+  @ResponseBody
+  public ApiDataResponse<?> memberForm(@Valid MemberDto memberDto) {
+    memberService.saveMember(Member.of(memberDto, passwordEncoder));
+    return ApiDataResponse.ok();
+  }
 
 }
 

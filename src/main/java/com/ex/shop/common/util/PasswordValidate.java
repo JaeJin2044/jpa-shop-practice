@@ -1,4 +1,4 @@
-package com.ex.shop.common.model;
+package com.ex.shop.common.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,7 +39,6 @@ public class PasswordValidate {
 				validate = Validate.minWordLength;
 			}
 		}
-
 		return this;
 	}
 

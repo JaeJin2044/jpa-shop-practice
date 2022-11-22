@@ -31,7 +31,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     PrincipalDetails user = (PrincipalDetails) principalDetilsService.loadUserByUsername(email);
 
     if(!passwordEncoder.matches(password,user.getPassword())){
-      throw new BadCredentialsException("비밀번호가 올바르지 않습니다.");
+      throw new BadCredentialsException("PASSWORD_NOT_VALID");
     }
 
     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
@@ -39,7 +39,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     return usernamePasswordAuthenticationToken;
   }
-
 
   /**
    * 위의 authenticate 메소드에서 반환한 객체가 유효한 타입이 맞는지 검사

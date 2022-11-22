@@ -4,7 +4,8 @@ function ajaxRestCall(option) {
   //default option
   var defOption = {
     type: "post",
-    dataType: "json"
+    dataType: "json",
+    cache : false
   }
 
   //option merge

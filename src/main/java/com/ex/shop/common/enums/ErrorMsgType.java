@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorMsgType {
-  ACCESS_DENIED("11","권한이 없는 페이지로 접근하셨습니다.");
+  ACCESS_DENIED("11","권한이 없는 페이지로 접근 및 요청하셨습니다.");
 
   String code;
   String msg;

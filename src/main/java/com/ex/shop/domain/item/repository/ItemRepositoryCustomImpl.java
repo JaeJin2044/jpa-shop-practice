@@ -1,14 +1,15 @@
 package com.ex.shop.domain.item.repository;
 
 
+import com.ex.shop.domain.global.dto.MainItemDto;
+import com.ex.shop.domain.global.dto.QMainItemDto;
 import com.ex.shop.domain.item.dto.ItemSearchDto;
 import com.ex.shop.domain.item.entity.Item;
 import com.ex.shop.domain.item.entity.QItem;
+import com.ex.shop.domain.item.entity.QItemImg;
 import com.ex.shop.domain.item.enums.ItemSellStatus;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -36,6 +37,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 //      .offset(pageable.getOffset())
 //      .limit(pageable.getPageSize())
 //      .fetchResults(); //depreated 됨으로 인해 변경
+
+
+
     List<Item> results = jpaQueryFactory
       .selectFrom(QItem.item)
       .where(regDsAfter(itemSearchDto.getSearchDateType()),
@@ -57,6 +61,52 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 
     return new PageImpl<>(results, pageable, total); //조회한 결과를 Page클래스의 구현체이 PageImpl 객체로 반환합니다.
   }
+
+
+  @Override
+  public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+
+    QItem item = QItem.item;
+    QItemImg itemImg = QItemImg.itemImg;
+
+    List<MainItemDto> result = jpaQueryFactory
+      .select(
+        new QMainItemDto(
+          item.id,
+          item.itemNm,
+          item.itemDetail,
+          itemImg.imgUrl,
+          item.price
+        )
+      )
+      .from(itemImg)
+      .join(itemImg.item, item)
+      .where(itemImg.reimgYn.eq("Y"))
+      .where(itemNmLike(itemSearchDto.getSearchQuery()))
+      .orderBy(item.id.desc())
+      .offset(pageable.getOffset())
+      .limit(pageable.getPageSize())
+      .fetch();
+
+    int total = jpaQueryFactory
+      .select(
+        new QMainItemDto(
+          item.id,
+          item.itemNm,
+          item.itemDetail,
+          itemImg.imgUrl,
+          item.price
+        )
+      )
+      .from(itemImg)
+      .join(itemImg.item, item)
+      .where(itemImg.reimgYn.eq("Y"))
+      .where(itemNmLike(itemSearchDto.getSearchQuery()))
+      .fetch().size();
+
+    return new PageImpl<>(result,pageable,total);
+  }
+
 
 
   /**
@@ -97,5 +147,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     return null;
   }
 
+
+  private BooleanExpression itemNmLike(String searchQuery){
+    return StringUtils.isBlank(searchQuery) ? null : QItem.item.itemNm.like("%"+searchQuery+"%");
+  }
 
 }

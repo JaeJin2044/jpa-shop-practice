@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div>
+  <script type="text/javascript" th:inline="javascript">
+    var ERROR_CODE = [[${errorCode}]];
+    var ERROR_MSG = [[${message}]];
+    var STATUS_CODE = [[${statusCode}]];
+
+    console.log('######에러페이지 내용#####')
+    console.log('error code:',ERROR_CODE);
+    console.log('error msg:', ERROR_MSG);
+    console.log('http status code:', STATUS_CODE);
+    console.log('######에러페이지 내용#####')
+
+  </script>
+
+  <h2>에러 페이지입니다.</h2>
+</div>

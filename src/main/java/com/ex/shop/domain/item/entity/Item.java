@@ -1,6 +1,7 @@
 package com.ex.shop.domain.item.entity;
 
 import com.ex.shop.common.entity.BaseEntity;
+import com.ex.shop.common.exception.OutOfStockException;
 import com.ex.shop.domain.item.dto.ItemFormDto;
 import com.ex.shop.domain.item.enums.ItemSellStatus;
 import java.util.ArrayList;
@@ -60,6 +61,9 @@ public class Item extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private ItemSellStatus itemSellStatus;
 
+//  @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+//  private List<ItemImg> itemImgList = new ArrayList<>();
+
   public void updateItem(ItemFormDto itemFormDto){
     this.itemNm = itemFormDto.getItemNm();
     this.price = itemFormDto.getPrice();
@@ -68,4 +72,24 @@ public class Item extends BaseEntity {
     this.itemSellStatus = itemFormDto.getItemSellStatus();
   }
 
+  public void removeStock(int stockNumber){
+    int restStock = this.stockNumber - stockNumber;
+    if(restStock < 0){
+      throw new OutOfStockException("상품 재고가 부족합니다.");
+    }
+    this.stockNumber = restStock;
+  }
+
+  public void addStock(int stockNumber){
+    this.stockNumber += stockNumber;
+  }
+
 }
+
+
+
+
+
+
+
+

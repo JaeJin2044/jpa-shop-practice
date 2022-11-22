@@ -14,4 +14,6 @@ public interface ItemRepository extends JpaRepository<Item,Long> , QuerydslPredi
   @Query("select i from Item i where i.itemDetail like %:itemDetail% order by i.price desc")
   List<Item> findByItemDetail(String itemDetail);
 
+
+
 }

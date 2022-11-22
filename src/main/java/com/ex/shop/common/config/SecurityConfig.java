@@ -2,7 +2,6 @@ package com.ex.shop.common.config;
 
 import com.ex.shop.common.auth.CustomAuthenticationEntryPoint;
 import com.ex.shop.common.auth.handler.UserAccessDeniedHandler;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -49,7 +48,8 @@ public class SecurityConfig{
         .permitAll()
         .antMatchers("/admin/**").hasRole("ADMIN")   // admin 권한만 접근가능
         .anyRequest()
-        .authenticated())
+        .authenticated()
+      )
       .formLogin(form -> form
         .loginPage(loginPage)
         .usernameParameter("email")
@@ -57,12 +57,15 @@ public class SecurityConfig{
         .loginProcessingUrl(loginProcessingUrl)
         .successForwardUrl(successForwardUrl)
         .failureForwardUrl(failureUrl)
-        .permitAll())
+        .permitAll()
+      )
       .sessionManagement(session -> session
-        .invalidSessionUrl(loginPage))
+        .invalidSessionUrl(loginPage)
+      )
       .exceptionHandling(error -> error
         .accessDeniedHandler(new UserAccessDeniedHandler())
-        .authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
+        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+      )
       .logout(logout -> logout
         .logoutRequestMatcher(new AntPathRequestMatcher(logoutUrl))
         .invalidateHttpSession(true)
