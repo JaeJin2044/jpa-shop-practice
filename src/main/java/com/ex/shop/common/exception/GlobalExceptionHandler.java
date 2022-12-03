@@ -3,19 +3,25 @@ package com.ex.shop.common.exception;
 import com.ex.shop.common.enums.ResponseCode;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
   @ExceptionHandler
   public ModelAndView exception(Exception e, HttpServletResponse response) {
+
     HttpStatus httpStatus = HttpStatus.valueOf(response.getStatus());
     ResponseCode responseCode = httpStatus.is4xxClientError() ? ResponseCode.INVALID_INPUT_VALUE
       : ResponseCode.INTERNAL_SERVER_ERROR;
+
+
+    log.info("error : {} ", e.getMessage());
 
     if (httpStatus == HttpStatus.OK) {
       httpStatus = HttpStatus.FORBIDDEN;

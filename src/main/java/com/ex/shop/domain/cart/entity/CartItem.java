@@ -1,5 +1,6 @@
 package com.ex.shop.domain.cart.entity;
 
+import com.ex.shop.common.entity.BaseEntity;
 import com.ex.shop.domain.item.entity.Item;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name="cart_item")
 @Entity
-public class CartItem {
+public class CartItem extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,5 +40,21 @@ public class CartItem {
   private Item item;
 
   private int count;
+
+  public static CartItem createCartItem(Cart cart, Item item, int count){
+    CartItem cartItem = new CartItem();
+    cartItem.setItem(item);
+    cartItem.setCount(count);
+    cartItem.setCart(cart);
+    return cartItem;
+  }
+
+  public void updateCount(int count){
+    this.count = count;
+  }
+
+  public void addCount(int count){
+    this.count += count;
+  }
 
 }

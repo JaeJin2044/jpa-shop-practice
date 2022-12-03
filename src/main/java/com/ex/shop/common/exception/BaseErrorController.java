@@ -50,8 +50,8 @@ public class BaseErrorController implements ErrorController {
   @RequestMapping("/error")
   public ResponseEntity<ErrorResponse> error(HttpServletResponse response) {
     HttpStatus httpStatus = HttpStatus.valueOf(response.getStatus());
-    ResponseCode responseCode = httpStatus.is4xxClientError() ? ResponseCode.INVALID_INPUT_VALUE
-      : ResponseCode.INTERNAL_SERVER_ERROR;
+    ResponseCode responseCode =
+      httpStatus.is4xxClientError() ? ResponseCode.INVALID_INPUT_VALUE : ResponseCode.INTERNAL_SERVER_ERROR;
 
     if (httpStatus == HttpStatus.OK) {
       httpStatus = HttpStatus.FORBIDDEN;

@@ -60,6 +60,7 @@ public class OrderService {
   public Page<OrderHistDto> getOrderList(String email, Pageable pageable) {
 
     List<Order> orders = orderRepository.findOrders(email, pageable); // 주문 목록을 조회
+
     Long totalCount = orderRepository.countOrder(email); // 주문 총 개수
 
     List<OrderHistDto> orderHistDtos = new ArrayList<>();
@@ -70,15 +71,12 @@ public class OrderService {
 
       for (OrderItem orderItem : orderItems) { // entity -> dto
 
-        ItemImg itemImg = itemImgRepository.findByItemIdAndReimgYn(
-          orderItem.getItem().getId(), "Y"); // 대표상품인지 보는거 (상품 이력 페이지에 출력해야 하니까)
+        ItemImg itemImg = itemImgRepository.findByItemIdAndReimgYn(orderItem.getItem().getId(), "Y"); // 대표상품인지 보는거 (상품 이력 페이지에 출력해야 하니까)
 
-        OrderItemDto orderItemDto =
-          new OrderItemDto(orderItem, itemImg.getImgUrl()); // entity-> dto
+        OrderItemDto orderItemDto = new OrderItemDto(orderItem, itemImg.getImgUrl()); // entity-> dto
 
         orderHistDto.addOrderItemDto(orderItemDto);
       }
-
       orderHistDtos.add(orderHistDto);
     }
 
@@ -87,7 +85,10 @@ public class OrderService {
 
   @Transactional(readOnly = true)
   public boolean validateOrder(Long orderId, String email){
-    Member curMember = memberRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
+
+    Member curMember = memberRepository.findByEmail(email)
+      .orElseThrow(EntityNotFoundException::new);
+
     Order order = orderRepository.findById(orderId)
       .orElseThrow(EntityNotFoundException::new);
     Member savedMember = order.getMember();
@@ -95,7 +96,6 @@ public class OrderService {
     if(!StringUtils.equals(curMember.getEmail(), savedMember.getEmail())){
       return false;
     }
-
     return true;
   }
 
@@ -106,4 +106,23 @@ public class OrderService {
     order.cancelOrder();
   }
 
+  @Transactional
+  public Long orders(List<OrderDto> orderDtoList, String email){
+
+    Member member = memberRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
+    List<OrderItem> orderItemList = new ArrayList<>();
+
+    for (OrderDto orderDto : orderDtoList) {
+      Item item = itemRepository.findById(orderDto.getItemId())
+        .orElseThrow(javax.persistence.EntityNotFoundException::new);
+
+      OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
+      orderItemList.add(orderItem);
+    }
+
+    Order order = Order.createOrder(member, orderItemList);
+    orderRepository.save(order);
+
+    return order.getId();
+  }
 }

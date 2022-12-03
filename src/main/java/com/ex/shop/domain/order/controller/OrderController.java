@@ -44,16 +44,21 @@ public class OrderController {
 
   // 구매이력 조회 get 페이지
   @GetMapping(value = {"/orders", "/orders/{page}"})
-  public String orderHist(@PathVariable("page") Optional<Integer> page,  @AuthenticationPrincipal PrincipalDetails principalDetails, Model model){
+  public String orderHist(
+    @PathVariable("page") Optional<Integer> page,
+    @AuthenticationPrincipal PrincipalDetails principalDetails
+    , Model model
+  ){
 
-    Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10); // 한 번에 가지고 올 주문 개수 4개!!!
+    // 한 번에 가지고 올 주문 개수 10개!!!
+    Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 
     // 현재 로그인한 회원은 화면에 전달한 주문 목록 데이터를 리턴 값으로 받음 (이메일과 페이징 객체를 파라미터로 전달)
     Page<OrderHistDto> ordersHistDtoList = orderService.getOrderList(principalDetails.getMember().getEmail(), pageable);
+
     // ordersHistDtoList: 주문 목록 데이터
     // principal.getName(): 이메일(현재 로그인한 회원)
     // pageable: 페이징 객체?
-
     model.addAttribute("orders", ordersHistDtoList);
     model.addAttribute("page", pageable.getPageNumber());
     model.addAttribute("maxPage", 5);
@@ -68,6 +73,7 @@ public class OrderController {
     if(!orderService.validateOrder(orderId, principal.getName())){
       throw new BusinessException("주문 취소 권한이 없습니다.");
     }
+
     orderService.cancelOrder(orderId);
     return ApiDataResponse.of(orderId);
   }
